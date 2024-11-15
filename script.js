@@ -1,254 +1,206 @@
 let list = document.querySelector('input');
 let clear = document.querySelector(".x-button");
-// document.querySelector(".add-button").addEventListener('click',()=>{
-//     console.log(list.value);
-// })
+
 document.querySelector('.x-button').addEventListener('click',()=>{
     list.value = "";
 })
-const xButton = document.querySelector(".clear-icon");
-xButton.addEventListener("mouseover", ()=> {
-    xButton.src = "./Frame (2).svg";
-});
-xButton.addEventListener("mouseout",() =>{
-    xButton.src = "./Frame (1).svg"; 
+document.querySelector(".clear-icon").addEventListener("mouseover", ()=> {
+    document.querySelector(".clear-icon").src = "./Frame (2).svg";
 });
 
-const arrowButton = document.querySelector(".arrow-icon");
-
-arrowButton.addEventListener("mouseover", ()=> {
-    arrowButton.src = "./Frame (4).svg";
+document.querySelector(".clear-icon").addEventListener("mouseout",() =>{
+    document.querySelector(".clear-icon").src = "./Frame (1).svg"; 
+});
+document.querySelector(".clear-icon").addEventListener("mouseover", ()=> {
+    document.querySelector(".clear-icon").src = "./Frame (2).svg";
 });
 
-arrowButton.addEventListener("mouseout",() =>{
-    arrowButton.src = "./Frame.svg"; 
+
+document.querySelector(".arrow-icon").addEventListener("mouseover", ()=> {
+    document.querySelector(".arrow-icon").src = "./Frame (4).svg";
 });
 
-let saveButton = document.querySelector('.add-button');
-let showButton = document.querySelector('.plus-button');
-let dataList = document.querySelector('.dataList');
-
-
-// Yeni tapşırıq əlavə edən funksiya
+document.querySelector(".arrow-icon").addEventListener("mouseout",() =>{
+    document.querySelector(".arrow-icon").src = "./Frame.svg"; 
+});
 function addTask() {
     const inputField = document.querySelector(".input");
     const inputText = inputField.value.trim();
 
     if (inputText) {
-        // Yeni tapşırıq yaratmaq
+        // Tapşırıq daxil edildikdə yeni element yarat
         const newItem = document.createElement("li");
         newItem.classList.add("task-item");
 
-        // Mətn və sil düyməsi üçün konteyner yaratmaq
         const taskContent = document.createElement("div");
         taskContent.classList.add("task-content");
 
-        // Tapşırıq mətnini əlavə etmək
         const taskText = document.createElement("span");
-        taskText.textContent = inputText; // inputText istifadə edirik
-        taskContent.appendChild(taskText); // Mətni konteynerə əlavə etmək
+        taskText.textContent = inputText;
+        taskContent.appendChild(taskText);
 
-        // Sil düyməsi yaratmaq
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("x-button");
-        deleteButton.innerHTML = '<img src="./Frame (1).svg" class="clear-icon" alt="Delete">';
-        deleteButton.onclick = function () {
-            newItem.remove();
-        };
+        const deleteIcon = document.createElement("img");
+        deleteIcon.src = "./Frame (1).svg";
+        deleteIcon.classList.add("clear-icon");
 
-        // Sil düyməsini konteynerə əlavə etmək
+        deleteIcon.addEventListener("mouseover", () => {
+            deleteIcon.src = "./Frame (2).svg";
+        });
+        deleteIcon.addEventListener("mouseout", () => {
+            deleteIcon.src = "./Frame (1).svg";
+        });
+
+        deleteButton.appendChild(deleteIcon);
+        deleteButton.addEventListener("click", () => {
+            newItem.remove();
+        });
         taskContent.appendChild(deleteButton);
 
-        // Mətn və sil düyməsinin olduğu konteyneri `newItem`-ə əlavə etmək
         newItem.appendChild(taskContent);
-
-        // Yeni tapşırığı `.dataList`-ə əlavə etmək
         document.querySelector(".dataList").appendChild(newItem);
 
-        // Input sahəsini təmizləmək
-        inputField.value = "";
+        inputField.value = ""; // Input sahəsini təmizləyirik
     } else {
-        alert("Tapşırıq daxil etmek ucun + buttonun klikleyin!!");
+        alert("Tapşırıq daxil etmək üçün + düyməsinə klikləyin!");
     }
 }
 
-// Add düyməsinə basıldığında input sahəsini gizlədərək to-do siyahısını göstərir
-document.querySelector(".add-button").addEventListener("click", function () {
+
+document.querySelector(".add-button").addEventListener("click",()=> {
+   
+    const hoverPlus = document.querySelector(".plus-button");
+    const mainInput = document.querySelector(".input");
+    hoverPlus.addEventListener("click", () => {
+        mainInput.classList.remove("dis-none");
+    });
+
     const inputField = document.querySelector(".input");
-    inputField.style.display = "none";
-    document.querySelector('.x-button').style.display = "none";
+    const xButton = document.querySelector('.x-button');
     const dataList = document.querySelector(".todo-container");
-    dataList.style.display = "block";
-    dataList.style.marginTop = "20px";
-    document.querySelector(".delete-button").style.marginTop="-10px";
-
-    document.querySelector('.header-text').style.top = "-45px";
-    document.querySelector('.x-button').style.marginTop = "-20px";
-    document.querySelector('.container').style.height = "290px";
-    document.querySelector('.todo-container').style.height = "190px";
+    const headerText = document.querySelector('.header-text');
+    const arrowIcon = document.querySelector('.arrow-icon');
+    const deleteButton = document.querySelector('.delete-button');
+    inputField.style.display = "none"; 
+    xButton.style.display = "none"; 
+    dataList.style.display = "block"; 
+    dataList.style.marginTop = "10px";
+    xButton.style.marginTop = "-20px";
     document.querySelector('.selection').style.marginTop = "-10px";
-    document.querySelector('.arrow-icon').style.marginTop = "-20px";
-
-    const container = document.querySelector('.container');
-    container.style.display = "flex";
-    document.querySelector('.header-text').style.marginTop = "35px";
-
-    const xButton = document.querySelector(".clear-icon");
-xButton.addEventListener("mouseover", ()=> {
-    xButton.src = "./Frame (2).svg";
-});
-xButton.addEventListener("mouseout",() =>{
-    xButton.src = "./Frame (1).svg"; 
+    arrowIcon.style.marginTop = "0px";
+    arrowIcon.style.marginBottom = "5px";
+    deleteButton.style.marginTop = "0px";
+    headerText.style.marginTop = "54px";
+    
 });
 
-});
-
-// Plus düyməsinə basıldığında to-do siyahısını gizlədərək input sahəsini göstərir
 document.querySelector(".plus-button").addEventListener("click", function () {
-    document.querySelector(".input").style.display = "block"; // input sahəsini göstərir
-    const inputField = document.querySelector(".input");
-    document.querySelector('.todo-container').style.display = "none";
+    document.querySelector(".input").style.display = "block";     
     document.querySelector(".clear-icon").style.margin = "0px";
-    document.querySelector(".container").style.height = "236px";
-    document.querySelector(".input").style.marginTop = "26px";
     document.querySelector(".arrow-icon").style.marginTop = "28px";
     document.querySelector(".delete-button").style.marginTop="-20px";
-    document.querySelector('.header-text').style.top = "-15px";
     document.querySelector('.x-button').style.marginTop = "-10px";
     document.querySelector(".x-button").style.display = "block";
-    document.querySelector(".x-button").style.marginRight = "-210px";
-    document.querySelector(".selection").style.marginTop = "30px";
-
-    const arrow = document.querySelector(".delete-button");
-        // Klikləndikdə şəkli dəyişən hadisə dinləyicisi
-        arrow.addEventListener("click", () => {
-            const imgElement = arrow.querySelector("img");
-            imgElement.src = "./Frame (2).svg"; // Yeni şəkil yolu
-            } )
+    document.querySelector(".x-button").style.marginRight = "-200px";
+    document.querySelector(".clear-icon").style.marginRight = "9px";
 });
 
-// X düyməsi funksiyası: Input sahəsini təmizləyir
 document.querySelector(".x-button").addEventListener("click", function () {
-    document.querySelector(".input").value = ""; // Input sahəsini təmizləyirik
+    document.querySelector(".input").value = ""; 
 });
 
-// Arrow düyməsi ilə sıralama
+let isAscending = true; 
+
+
 document.querySelector(".arrow-icon").addEventListener("click", () => {
     const taskList = document.querySelector(".dataList");
-    let tasks = Array.from(taskList.children); 
+    let tasks = Array.from(taskList.children);
 
+    
     for (let i = 0; i < tasks.length; i++) {
         for (let j = 0; j < tasks.length - i - 1; j++) {
-            if (tasks[j].textContent > tasks[j + 1].textContent) {
+            if (
+                (isAscending && tasks[j].textContent > tasks[j + 1].textContent) || 
+                (!isAscending && tasks[j].textContent < tasks[j + 1].textContent)
+            ) {
                 let temp = tasks[j];
                 tasks[j] = tasks[j + 1];
                 tasks[j + 1] = temp;
             }
         }
     }
-
-    // Yeni sıralanmış tapşırıqları yenidən `.dataList`-ə əlavə edirik
-    taskList.innerHTML = ''; // Mövcud siyahını təmizləyirik
-    tasks.forEach(task => taskList.appendChild(task)); // Yeni sıralanmış elementləri əlavə edirik
+    taskList.innerHTML = ''; 
+    tasks.forEach(task => taskList.appendChild(task)); 
+    isAscending = !isAscending;
+    const arrowIcon = document.querySelector(".arrow-icon");
+    arrowIcon.addEventListener("mouseover", () => {
+        arrowIcon.src = isAscending ? "./Frame (5).svg" : "./Frame (4).svg";
+    });
+    arrowIcon.addEventListener("mouseout", () => {
+        arrowIcon.src = isAscending ? "./Frame (6).svg" : "./Frame.svg";
+    });
 });
 
-
-// /////////////////////////////////////////
-
-
+// const taskItems = document.querySelectorAll(".task-item"); 
+// taskItems.forEach(el => el.classList.add("task-item"));
 
 
-        //     let inputFields = document.querySelectorAll(".inputData");
-        //     let storedData = JSON.parse(localStorage.getItem("dataList")) || [];
+// taskItems.forEach(item => {
+//     item.setAttribute("draggable", "true");
+// });
 
-        //     inputFields.forEach(input => {
-        //         if (input.value) {
-        //             storedData.push(input.value);
-        //             input.value = ""; // Giriş sahəsini təmizlə
-        //         }
-        //     });
-
-        //     localStorage.setItem("dataList", JSON.stringify(storedData));
-        //     alert("Məlumat yadda saxlanıldı!");
-        // })
-
-        // // Göstər funksiyası
-        // function goster() {
-        //     let dataList = JSON.parse(localStorage.getItem("dataList")) || [];
-        //     let dataListElement = document.getElementById("dataList");
-        //     dataListElement.innerHTML = ""; // Siyahını təmizlə
-
-        //     if (dataList.length > 0) {
-        //         dataList.forEach(function(data) {
-        //             let listItem = document.createElement("li");
-        //             listItem.textContent = data;
-        //             dataListElement.appendChild(listItem);
-        //         });
-        //     } else {
-        //         alert("Heç bir məlumat tapılmadı.");
-        //     }
-        // }
-
-        // // Yeni input əlavə edən funksiya
-        // function yeniInputElaveEt() {
-        //     const inputContainer = document.getElementById("inputContainer");
-        //     let yeniInput = document.createElement("input");
-        //     yeniInput.type = "text";
-        //     yeniInput.className = "inputData";
-        //     yeniInput.placeholder = "Məlumatı daxil edin";
-        //     inputContainer.appendChild(yeniInput);
-        // }
-
-        // // Səhifə yüklənəndə yadda saxlanılan məlumatları göstər
-        // document.addEventListener("DOMContentLoaded", goster);
-
-        // // Event listener-lərin təyin edilməsi
-        // saveButton.addEventListener("click", yeniInputElaveEt);
-        // showButton.addEventListener("click", goster);
+// const taskList = document.querySelector(".dataList");
+// let draggedItem = null;
 
 
-/* 
- // Elementləri seçmək
- 
-        // Elementləri seçmək
-        const saveButton = document.getElementById("saveButton");
-        const showButton = document.getElementById("showButton");
+// taskList.addEventListener("dragstart", (e) => {
+//     console.log("Drag start target:", e.target); 
+//     if (e.target && e.target.classList && e.target.classList.contains("task-item")) {
+//         draggedItem = e.target;
+//         e.target.classList.add("dragging");
+//     }
+// });
 
-        // Yadda saxla funksiyası
-        function yaddaSaxla() {
-            let data = document.getElementById("inputData").value;
-            if (data) {
-                let storedData = JSON.parse(localStorage.getItem("dataList")) || [];
-                storedData.push(data);
-                localStorage.setItem("dataList", JSON.stringify(storedData));
-                document.getElementById("inputData").value = ""; // Girişi təmizlə
-                alert("Məlumat yadda saxlanıldı!");
-            } else {
-                alert("Zəhmət olmasa məlumatı daxil edin.");
-            }
-        }
 
-        // Göstər funksiyası
-        function goster() {
-            let dataList = JSON.parse(localStorage.getItem("dataList")) || [];
-            let dataListElement = document.getElementById("dataList");
-            dataListElement.innerHTML = ""; // Siyahını təmizlə
 
-            if (dataList.length > 0) {
-                dataList.forEach(function(data) {
-                    let listItem = document.createElement("li");
-                    listItem.textContent = data;
-                    dataListElement.appendChild(listItem);
-                });
-            } else {
-                alert("Heç bir məlumat tapılmadı.");
-            }
-        }
+// taskList.addEventListener("dragend", (e) => {
+//     if (draggedItem) {
+//         draggedItem.classList.remove("dragging");
+//         draggedItem = null;
+//     }
+// });
 
-        // Səhifə yüklənəndə yadda saxlanılan məlumatları göstər
-        document.addEventListener("DOMContentLoaded", goster);
 
-        // Event listener-lərin təyin edilməsi
-        saveButton.addEventListener("click", yaddaSaxla);
-        showButton.addEventListener("click", goster);
-    */
+// taskList.addEventListener("dragover", (e) => {
+//     e.preventDefault();
+//     const afterElement = getDragAfterElement(taskList, e.clientY);
+//     if (afterElement === null) {
+        
+//         if (draggedItem) {
+//             taskList.appendChild(draggedItem);
+//         }
+//     } else {
+        
+//         if (draggedItem && afterElement) {
+//             taskList.insertBefore(draggedItem, afterElement);
+//         }
+//     }
+// });
+
+
+// function getDragAfterElement(container, y) {
+//     const draggableElements = [...container.querySelectorAll(".task-item:not(.dragging)")];
+//     return draggableElements.reduce(
+//         (closest, child) => {
+//             const box = child.getBoundingClientRect();
+//             const offset = y - box.top - box.height / 2;
+//             if (offset < 0 && offset > closest.offset) {
+//                 return { offset: offset, element: child };
+//             } else {
+//                 return closest;
+//             }
+//         },
+//         { offset: Number.NEGATIVE_INFINITY }
+//     ).element;
+// }
